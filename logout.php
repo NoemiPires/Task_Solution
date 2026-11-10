@@ -1,0 +1,1 @@
+// Vaidestruir a sessão ativa, redirecionandoo para a tela de login
