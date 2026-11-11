@@ -1,9 +1,8 @@
 :root {
     --color-primary: #2563eb;
-    --color-bg-start: #bccbdc;
-    --color-bg-end: #eaeef3;
+    --color-secondary: #eaeef3;
+    --color-background: #bccbdc;
     --color-text: #1a1a1a;
-    --color-text-muted: #6b7280;
 }
 
 * {
@@ -18,37 +17,47 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+    background: var(--color-background);
     padding: 20px;
 }
 
-/* Cartão estilo Vidro Jateado (Glassmorphism) */
-.login-card {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 28px;
-    padding: 40px 32px;
+.form-card {
+    background: var(--color-secondary);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 35px 30px;
     width: 100%;
-    max-width: 380px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    text-align: center;
+    max-width: 360px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* Ícone / Avatar Central */
-.avatar-container {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
+.form-card label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 14px;
+    margin-bottom: 4px;
+}
+
+.form-card input:focus {
+    border-bottom-color: var(--color-primary);
+}
+
+.form-card input {
+    width: 100%;
+    padding: 10px 4px;
+    border: none;
+    border-bottom: 2px solid var(--color-background);
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-options {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 30px;
-    color: var(--color-primary);
-    font-size: 2.2rem;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-direction: column;
 }
 
 /* Inputs com linha estilo minimalista da foto */
@@ -62,7 +71,7 @@ body {
 .input-field i {
     position: absolute;
     left: 10px;
-    color: var(--color-text-muted);
+    color: var(--color-text);
     font-size: 1.1rem;
 }
 
@@ -83,10 +92,9 @@ body {
 }
 
 .input-field input::placeholder {
-    color: var(--color-text-muted);
+    color: var(--color-text);
 }
 
-/* Opções adicionais (Lembrar-me / Esqueceu a senha) */
 .form-options {
     display: flex;
     justify-content: space-between;
@@ -113,7 +121,7 @@ body {
     text-decoration: underline;
 }
 
-.btn-login {
+.btn {
     width: 100%;
     padding: 14px;
     border: none;
@@ -128,7 +136,7 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-login:hover {
+.btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
