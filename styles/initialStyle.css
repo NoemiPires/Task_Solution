@@ -140,3 +140,11 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
+
+.error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}

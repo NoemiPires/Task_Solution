@@ -1,3 +1,33 @@
+<?php
+session_start();
+
+$erro = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once('conexao.php');
+
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $usuario = R::findOne(
+        'usuarios',
+        'email = ?',
+        [$email]
+    );
+
+    //confimar se encontrou o utilizador
+    if ($usuario && password_verify($password, $usuario->password)) {
+        $_SESSION['usuario_id'] = $usuario->id;
+        header('Location: index.php');
+        exit;
+    } else {
+        $erro = "Invalid email or password.";
+    }
+
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +40,7 @@
 
 <body>
     <main class="form-card">
-        <form action="login.php" method="POST" class="form-options">
+        <form action="" method="POST" class="form-options">
             <label for="username">Name:</label>
             <input type="text" name="username" id="username" required>
             <br>
@@ -22,6 +52,11 @@
             <br>
             <button type="submit" class="btn">Enter</button>
             <br>
+
+            <?php if (!empty($erro)): ?>
+                <p class="error"><?php echo $erro; ?></p>
+            <?php endif; ?>
+
             <p>Don't have an account? <a href="signup.php" class="form-options a">Sign up</a></p>
     </main>
 </body>
