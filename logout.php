@@ -1,1 +1,6 @@
-// Vaidestruir a sessão ativa, redirecionandoo para a tela de login
+<?php 
+session_start();
+session_destroy();
+header('Location: login.php');
+exit;
+?>
