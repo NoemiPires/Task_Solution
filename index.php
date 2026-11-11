@@ -27,6 +27,7 @@ if ($filter === 'todo') {
 
     <header class="topbar">
         <h1><i class="fa-solid fa-list-check"></i> Task Solution</h1>
+        <a href="logout.php"><button class="btn-logout">Logout</button></a>
     </header>
 
     <div class="main-container">

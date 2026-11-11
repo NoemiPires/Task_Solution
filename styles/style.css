@@ -48,6 +48,18 @@ body {
     flex-direction: column;
 }
 
+.btn-logout{
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--color-topbar-text);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--color-secondary);
+}
+
 .topbar {
     background-color: var(--color-topbar-bg);
     height: var(--topbar-height);
@@ -55,6 +67,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    justify-content: space-between;
 }
 
 .topbar img {
@@ -69,6 +82,9 @@ body {
     color: var(--color-topbar-text);
 }
 
+.topbar a{
+    margin-left: auto;
+}
 
 .main-container {
     display: flex;
@@ -303,3 +319,4 @@ body {
         flex-wrap: wrap;
     }
 }
+
