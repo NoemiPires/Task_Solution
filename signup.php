@@ -1,16 +1,35 @@
+<?php 
+//inciar sessão
+session_start();
+//verificaer se a pagina recebeu os dados do formulario
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    require_once('conexao.php');
+
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $email = $_POST['email'] ?? '';
+
+    $usuario = R::dispense('usuarios');
+    $usuario->username = $username;
+    $usuario->password = password_hash( $password, PASSWORD_DEFAULT);
+    $usuario->email = $email;
+    R::store($usuario);
+
+    header('Location: login.php'); exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signup</title>
     <link rel="stylesheet" href="Styles/initialStyle.css">
 </head>
 
 <body>
     <main class="form-card">
-        <form action="login.php" method="POST" class="form-options">
+        <form action="signup.php" method="POST" class="form-options">
             <label for="username">Name:</label>
             <input type="text" name="username" id="username" required>
             <br>
