@@ -1,15 +1,23 @@
 <?php
+session_start();
+// Bloquer  acsseso se não tiver logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once 'conexao.php';
 
+$usuario_id = $_SESSION['usuario_id'];
 $filter = $_GET['filter'] ?? 'all';
 
-// Consulta as tarefas conforme o filtro selecionado
+// Consulta as tarefas conforme o filtro selecionado e o usuário logado
 if ($filter === 'todo') {
-    $tarefas = R::find('tarefas', 'concluida = 0 ORDER BY id DESC');
+    $tarefas = R::find('tarefas', 'concluida = 0 AND usuario_id = ? ORDER BY id DESC', [$usuario_id]);
 } elseif ($filter === 'completed') {
-    $tarefas = R::find('tarefas', 'concluida = 1 ORDER BY id DESC');
+    $tarefas = R::find('tarefas', 'concluida = 1 AND usuario_id = ? ORDER BY id DESC', [$usuario_id]);
 } else {
-    $tarefas = R::findAll('tarefas', 'ORDER BY id DESC');
+    $tarefas = R::findAll('tarefas', 'usuario_id = ? ORDER BY id DESC', [$usuario_id]);
 }
 ?>
 <!DOCTYPE html>
@@ -20,14 +28,15 @@ if ($filter === 'todo') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Solution</title>
     <link rel="stylesheet" href="Styles/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
 
     <header class="topbar">
         <h1><i class="fa-solid fa-list-check"></i> Task Solution</h1>
-        <a href="logout.php"><button class="btn-logout">Logout</button></a>
+        <a href="logout.php" class="btn-logout">Logout</a>
     </header>
 
     <div class="main-container">
@@ -35,7 +44,8 @@ if ($filter === 'todo') {
             <nav class="filter-nav">
                 <a href="?filter=all" class="filter-btn <?php echo ($filter === 'all') ? 'active' : ''; ?>">All</a>
                 <a href="?filter=todo" class="filter-btn <?php echo ($filter === 'todo') ? 'active' : ''; ?>">To do</a>
-                <a href="?filter=completed" class="filter-btn <?php echo ($filter === 'completed') ? 'active' : ''; ?>">Completed</a>
+                <a href="?filter=completed"
+                    class="filter-btn <?php echo ($filter === 'completed') ? 'active' : ''; ?>">Completed</a>
             </nav>
         </aside>
 

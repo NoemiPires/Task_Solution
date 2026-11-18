@@ -1,15 +1,23 @@
 <?php
-require_once 'conexao.php';
+session_start();
 
-$filter = $_POST['filter'] ?? 'all';
-$id = (int)($_POST['id'] ?? 0);
-
-if ($id > 0) {
-    $tarefa = R::load('tarefas', $id);
-    if ($tarefa->id) {
-        R::trash($tarefa);
-    }
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php');
+    exit;
 }
 
-header('Location: index.php?filter=' . urlencode($filter));
-exit;
+require_once 'conexao.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'] ?? 0;
+    $filter = $_POST['filter'] ?? 'all';
+
+    $tarefa = R::findOne('tarefas', 'id = ? AND usuario_id = ?', [$id, $_SESSION['usuario_id']]);
+
+    if ($tarefa) {
+        R::trash($tarefa);
+    }
+
+    header("Location: index.php?filter=" . urlencode($filter));
+    exit;
+}

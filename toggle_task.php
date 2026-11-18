@@ -1,16 +1,22 @@
 <?php
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once 'conexao.php';
 
-$filter = $_POST['filter'] ?? 'all';
-$id = (int)($_POST['id'] ?? 0);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'] ?? 0;
+    $filter = $_POST['filter'] ?? 'all';
 
-if ($id > 0) {
-    $tarefa = R::load('tarefas', $id);
-    if ($tarefa->id) {
+    $tarefa = R::findOne('tarefas', 'id = ? AND usuario_id = ?', [$id, $_SESSION['usuario_id']]);
+
+    if ($tarefa) {
         $tarefa->concluida = $tarefa->concluida ? 0 : 1;
         R::store($tarefa);
     }
-}
 
-header('Location: index.php?filter=' . urlencode($filter));
-exit;
+    header("Location: index.php?filter=" . urlencode($filter));
+    exit;
+}
